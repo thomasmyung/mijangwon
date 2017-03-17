@@ -23,12 +23,12 @@ router.post('/webhook', function (req, res) {
 
   // Make sure this is a page subscription
   if (data.object === 'page') {
-  	console.log("blah blah")
+  	//console.log("blah blah")
     // Iterate over each entry - there may be multiple if batched
     data.entry.forEach(function(entry) {
       var pageID = entry.id;
       var timeOfEvent = entry.time;
-      receivedMessage(event);
+      //receivedMessage(event);
       // Iterate over each messaging event
       entry.messaging.forEach(function(event) {
         if (event.message) {
@@ -96,7 +96,7 @@ function receivedMessage(event) {
 
   var messageText = message.text;
   var messageAttachments = message.attachments;
-  sendTextMessage(senderID, messageText);
+  //sendTextMessage(senderID, messageText);
   if (messageText) {
   		sendTextMessage(senderID, messageText);
     // If we receive a text message, check to see if it matches a keyword
