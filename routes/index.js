@@ -33,7 +33,10 @@ router.post('/webhook', function (req, res) {
       // Iterate over each messaging event
       entry.messaging.forEach(function(event) {
         if (event.message) {
-          receivedMessage(event);
+        	getArticles(function(err, articles) {
+      		sendTextMessage(senderID, articles.text)
+      	})
+          //receivedMessage(event);
         } else {
           console.log("Webhook received unknown event: ", event);
         }
@@ -121,11 +124,7 @@ function receivedMessage(event) {
         break;
 
       default:
-
-      	getArticles(function(err, articles) {
-      		sendTextMessage(senderID, articles.text)
-      	})
-        //sendTextMessage(senderID, messageText);
+		sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
