@@ -108,7 +108,8 @@ function receivedMessage(event) {
         break;
 
       default:
-      	getArticles(function(err, articles) {
+
+      	var articles =getArticles(function(err, articles) {
       		sendTextMessage(senderID, articles[0].title)
       	})
         //sendTextMessage(senderID, messageText);
