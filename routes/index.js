@@ -48,7 +48,20 @@ router.post('/webhook', function (req, res) {
     res.sendStatus(200);
   }
 });
-
+var googleNewsEndpoint = "https://news.google.com/news?output=rss"
+function getArticles(callback) {
+	rssReader(googleNewsEndpoint, function(err, articles) {
+		if (err) {
+			callback(err)
+		} else {
+			if (articles.length >0) {
+				callback(null, articles)
+			} else{
+				callback("no articles received")
+			}
+		}
+	})
+}
 function sendTextMessage(recipientId, messageText) {
   var messageData = {
     recipient: {
@@ -164,18 +177,5 @@ function sendGenericMessage(recipientId) {
 
   callSendAPI(messageData);
 }
-var googleNewsEndpoint = "https://news.google.com/news?output=rss"
-function getArticles(callback) {
-	rssReader(googleNewsEndpoint, function(err, articles) {
-		if (err) {
-			callback(err)
-		} else {
-			if (articles.length >0) {
-				callback(null, articles)
-			} else{
-				callback("no articles received")
-			}
-		}
-	})
-}
+
 module.exports = router;
