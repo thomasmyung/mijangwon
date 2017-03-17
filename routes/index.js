@@ -109,7 +109,7 @@ function receivedMessage(event) {
 
       default:
 
-      	var articles =getArticles(function(err, articles) {
+      	getArticles(function(err, articles) {
       		sendTextMessage(senderID, articles[0].title)
       	})
         //sendTextMessage(senderID, messageText);
