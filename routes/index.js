@@ -98,7 +98,7 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
   //sendTextMessage(senderID, messageText);
   if (messageText) {
-  		sendTextMessage(senderID, messageText);
+  	//sendTextMessage(senderID, messageText);
     // If we receive a text message, check to see if it matches a keyword
     // and send back the example. Otherwise, just echo the text we received.
     switch (messageText) {
