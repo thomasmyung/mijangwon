@@ -33,9 +33,12 @@ router.post('/webhook', function (req, res) {
       // Iterate over each messaging event
       entry.messaging.forEach(function(event) {
         if (event.message) {
+          var senderID = event.sender.id;
+          var recipientID = event.recipient.id;
+          var timeOfMessage = event.timestamp;
           text = event.message.text;
           getArticles(function(err, articles) {
-            sendTextMessage(sender, articles[0].title)
+            sendTextMessage(senderID, articles[0].title)
           })
         } else {
           console.log("Webhook received unknown event: ", event);
