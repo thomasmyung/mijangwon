@@ -33,7 +33,10 @@ router.post('/webhook', function (req, res) {
       // Iterate over each messaging event
       entry.messaging.forEach(function(event) {
         if (event.message) {
-          receivedMessage(event);
+          text = event.message.text;
+          getArticles(function(err, articles) {
+            sendTextMessage(sender, articles[0].title)
+          })
         } else {
           console.log("Webhook received unknown event: ", event);
         }
@@ -48,6 +51,21 @@ router.post('/webhook', function (req, res) {
     res.sendStatus(200);
   }
 });
+var token = process.env.TOKEN_VALUE
+var googleNewsEndpoint = "https://news.google.com/news?output=rss"
+function getArticles(callback) {
+  rssReader(googleNewsEndpoint, function(err, articles) {
+    if (err) {
+      callback(err)
+    } else {
+      if (articles.length >0) {
+        callback(null, articles)
+      } else{
+        callback("no articles received")
+      }
+    }
+  })
+}
 
 function sendTextMessage(recipientId, messageText) {
   var messageData = {
@@ -164,18 +182,5 @@ function sendGenericMessage(recipientId) {
 
   callSendAPI(messageData);
 }
-var googleNewsEndpoint = "https://news.google.com/news?output=rss"
-function getArticles(callback) {
-	rssReader(googleNewsEndpoint, function(err, articles) {
-		if (err) {
-			callback(err)
-		} else {
-			if (articles.length >0) {
-				callback(null, articles)
-			} else{
-				callback("no articles received")
-			}
-		}
-	})
-}
+
 module.exports = router;
