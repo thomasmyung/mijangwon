@@ -38,7 +38,7 @@ router.post('/webhook', function (req, res) {
           var timeOfMessage = event.timestamp;
           text = event.message.text;
           getArticles(function(err, articles) {
-            sendTextMessage(senderID, articles[0].title)
+            sendGenericMessage(senderID, articles[0])
           })
         } else {
           console.log("Webhook received unknown event: ", event);
@@ -139,7 +139,7 @@ function receivedMessage(event) {
     sendTextMessage(senderID, "Message with attachment received");
   }
 }
-function sendGenericMessage(recipientId) {
+function sendGenericMessage(recipientId, article) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -150,38 +150,13 @@ function sendGenericMessage(recipientId) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: "rift",
-            subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",               
-            image_url: "http://messengerdemo.parseapp.com/img/rift.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/rift/",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for first bubble",
-            }],
-          }, {
-            title: "touch",
-            subtitle: "Your Hands, Now in VR",
-            item_url: "https://www.oculus.com/en-us/touch/",               
-            image_url: "http://messengerdemo.parseapp.com/img/touch.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/touch/",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for second bubble",
-            }]
-          }]
+            title: article.title[0],
+            subtitle: article.published.toString(),
+            item_url: article.link
+            }
+        ]
         }
-      }
-    }
-  };  
+        };  
 
   callSendAPI(messageData);
 }
