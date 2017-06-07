@@ -156,9 +156,9 @@ function sendGenericMessage(recipientId, article) {
             }
         ]
         }
-        };  
+        }
 
   callSendAPI(messageData);
-}
+};
 
 module.exports = router;
