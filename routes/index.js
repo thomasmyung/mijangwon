@@ -150,7 +150,7 @@ function sendGenericMessage(recipientId, article) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: article.title[0],
+            title: article.title,
             subtitle: article.published.toString(),
             item_url: article.link
             }]
