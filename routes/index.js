@@ -153,12 +153,12 @@ function sendGenericMessage(recipientId, article) {
             title: article.title[0],
             subtitle: article.published.toString(),
             item_url: article.link
-            }
-        ]
+            }]
         }
-        }
+      }
+    };
 
   callSendAPI(messageData);
-};
+}
 
 module.exports = router;
