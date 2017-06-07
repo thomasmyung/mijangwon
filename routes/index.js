@@ -156,7 +156,8 @@ function sendGenericMessage(recipientId, article) {
             }]
         }
       }
-    };
+    }
+  };
 
   callSendAPI(messageData);
 }
