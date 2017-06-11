@@ -50,7 +50,7 @@ router.post('/webhook', function (req, res) {
                       }
                       break;
                     default:
-                      sendGenericMessage(senderID, article[0])
+                      sendGenericMessage(senderID, articles[0])
                       break;
                 }
               }
