@@ -37,9 +37,24 @@ router.post('/webhook', function (req, res) {
           var recipientID = event.recipient.id;
           var timeOfMessage = event.timestamp;
           text = event.message.text;
+          var normalizedText = text.toLowerCase().replace(' ','')
           getArticles(function(err, articles) {
-            sendGenericMessage(senderID, articles[0])
-          })
+            if (err){
+              console.log(err);
+            } else {
+                switch(normalizedText) {
+                    case "showmore":
+                      var maxArticles = Math.min(articles.length, 5)
+                      for (var i = 0 ; i < maxArticles; i ++) {
+                        sendGenericMessage(sender, articles[i]);
+                      }
+                      break;
+                    default;
+                      sendGenericMessage(sender, article[0])
+                      break;
+                }
+              }
+          }
         } else {
           console.log("Webhook received unknown event: ", event);
         }
