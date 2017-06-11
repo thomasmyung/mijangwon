@@ -46,11 +46,11 @@ router.post('/webhook', function (req, res) {
                     case "showmore":
                       var maxArticles = Math.min(articles.length, 5)
                       for (var i = 0 ; i < maxArticles; i ++) {
-                        sendGenericMessage(sender, articles[i]);
+                        sendGenericMessage(senderID, articles[i]);
                       }
                       break;
                     default:
-                      sendGenericMessage(sender, article[0])
+                      sendGenericMessage(senderID, article[0])
                       break;
                 }
               }
