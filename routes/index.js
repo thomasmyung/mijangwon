@@ -54,7 +54,7 @@ router.post('/webhook', function (req, res) {
                       break;
                 }
               }
-          }
+          })   
         } else {
           console.log("Webhook received unknown event: ", event);
         }
