@@ -49,7 +49,7 @@ router.post('/webhook', function (req, res) {
                         sendGenericMessage(sender, articles[i]);
                       }
                       break;
-                    default;
+                    default:
                       sendGenericMessage(sender, article[0])
                       break;
                 }
