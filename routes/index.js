@@ -3,7 +3,7 @@ var request = require('request');
 var rssReader = require('feed-read')
 var mongoose = require('mongoose');
 var router = express.Router();
-var User = require('../model/user');
+var User = require('./model/user');
 
 mongoose.connect('mongodb://localhost/test');
 /* GET home page. */
