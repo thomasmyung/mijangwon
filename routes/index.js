@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var router = express.Router();
 var User = require('../model/user');
 
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('localhost/test');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
