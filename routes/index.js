@@ -1,8 +1,11 @@
 var express = require('express');
 var request = require('request');
 var rssReader = require('feed-read')
+var mongoose = requre('mongoose');
 var router = express.Router();
+var User = require('../model/user');
 
+mongoose.connect('mongodb://localhost/test');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -49,6 +52,9 @@ router.post('/webhook', function (req, res) {
                         sendGenericMessage(senderID, articles[i]);
                       }
                       break;
+                    case "/subscribe":
+                      subscribeUser(senderID)
+                      break;
                     default:
                       sendGenericMessage(senderID, articles[0])
                       break;
@@ -69,6 +75,25 @@ router.post('/webhook', function (req, res) {
     res.sendStatus(200);
   }
 });
+
+function subscribeUser(id){
+  var newUser = new User({
+    fb_id: id,
+  });
+
+  newUser.findOneAndUpdate({fb_id: id}, {fb_id: id}, {upsert: true}, function(err,doc){
+    if(err) return res.send(500, {error: err});
+    return res.send("successfully saved");
+  });
+  newUser.save(function(err){
+    if (err) {
+      sendTextMessage(id, "there was an error")
+    } else {
+      console.log('User saved successfully')
+      sendTextMessage(newUser.fb_id, "You've been subsribed")
+    }  
+  })
+}
 var token = process.env.TOKEN_VALUE
 var googleNewsEndpoint = "https://news.google.com/news?output=rss"
 function getArticles(callback) {
