@@ -4,6 +4,7 @@ var rssReader = require('feed-read')
 var mongoose = require('mongoose');
 var router = express.Router();
 var User = require('../model/user');
+mongoose.Promise = require('bluebird');
 
 mongoose.connect('localhost','test');
 /* GET home page. */
