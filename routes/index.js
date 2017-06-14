@@ -4,6 +4,19 @@ var rssReader = require('feed-read')
 var mongoose = require('mongoose');
 var router = express.Router();
 var User = require('../model/user');
+var schedule = require('node-schedule');
+
+var j = schedule.scheduleJob('* 9 * * *', function(){
+  User.find({}, function(err, users) {
+    if (users != null) {
+      apiController.getArticles(function(err, articles){
+        users.forEach(function(user){
+          apiController.sendGenericMessage(user.fb_id, articles[0])
+        });
+      })
+    }
+  });
+});
 
 mongoose.Promise = global.Promise;
 mongoose.connect('localhost','test');
@@ -58,6 +71,7 @@ router.post('/webhook', function (req, res) {
                       break;
                     case "/unsubscribe":
                       unsubscribeUser(senderID)
+                      break;
                     default:
                       sendGenericMessage(senderID, articles[0])
                       break;
