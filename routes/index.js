@@ -89,7 +89,7 @@ function subscribeUser(id){
       sendTextMessage(id, "there was an error")
     } else {
       console.log('User saved successfully')
-      sendTextMessage(newUser.fb_id, "You've been subsribed")
+      sendTextMessage(newUser.fb_id, "You've been subscribed")
     }  
   })
 }
@@ -101,7 +101,7 @@ function unsubscribeUser(id){
       sendTextMessage(id, "there was an error")
     } else {
       console.log('User saved successfully')
-      sendTextMessage(newUser.fb_id, "You've been unsubsribed")
+      sendTextMessage(newUser.fb_id, "You've been unsubscribed")
     }  
   })
 }
