@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var router = express.Router();
 var User = require('../model/user');
 
-mongoose.connect('localhost/test');
+mongoose.connect('localhost','test');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -81,7 +81,7 @@ function subscribeUser(id){
     fb_id: id,
   });
 
-  newUser.findOneAndUpdate({fb_id: id}, {fb_id: id}, {upsert: true}, function(err,doc){
+  User.findOneAndUpdate({fb_id: id}, {fb_id: id}, {upsert: true}, function(err,doc){
     if(err) return res.send(500, {error: err});
     return res.send("successfully saved");
   });
