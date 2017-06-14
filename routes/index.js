@@ -82,7 +82,7 @@ function subscribeUser(id){
     fb_id: id,
   });
 
-  User.save(function(err){
+  newUser.save(function(err){
     if (err) {
       sendTextMessage(id, "there was an error")
     } else {
