@@ -82,11 +82,7 @@ function subscribeUser(id){
     fb_id: id,
   });
 
-  User.findOneAndUpdate({fb_id: id}, {fb_id: id}, {upsert: true}, function(err,doc){
-    if(err) return res.send(500, {error: err});
-    return res.send("successfully saved");
-  });
-  newUser.save(function(err){
+  User.save(function(err){
     if (err) {
       sendTextMessage(id, "there was an error")
     } else {
