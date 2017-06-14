@@ -6,7 +6,7 @@ var router = express.Router();
 var User = require('../model/user');
 var schedule = require('node-schedule');
 
-var j = schedule.scheduleJob('18 * * * *', function(){
+var j = schedule.scheduleJob('* 9 * * *', function(){
   User.find({}, function(err, users) {
     if (users != null) {
       getArticles(function(err, articles){
