@@ -56,6 +56,8 @@ router.post('/webhook', function (req, res) {
                     case "/subscribe":
                       subscribeUser(senderID)
                       break;
+                    case "/unsubscribe":
+                      unsubscribeUser(senderID)
                     default:
                       sendGenericMessage(senderID, articles[0])
                       break;
@@ -82,7 +84,7 @@ function subscribeUser(id){
     fb_id: id,
   });
 
-  newUser.save(function(err){
+  User.findOneAndUpdate({fb_id: id}, {fb_id: id}, {upsert:true}, function(err, user){
     if (err) {
       sendTextMessage(id, "there was an error")
     } else {
@@ -91,6 +93,20 @@ function subscribeUser(id){
     }  
   })
 }
+
+
+function unsubscribeUser(id){
+  User.findOneAndRemove({fb_id: id}, {upsert:true}, function(err, user){
+    if (err) {
+      sendTextMessage(id, "there was an error")
+    } else {
+      console.log('User saved successfully')
+      sendTextMessage(newUser.fb_id, "You've been unsubsribed")
+    }  
+  })
+}
+
+
 var token = process.env.TOKEN_VALUE
 var googleNewsEndpoint = "https://news.google.com/news?output=rss"
 function getArticles(callback) {
