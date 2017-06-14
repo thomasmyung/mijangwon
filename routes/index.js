@@ -6,12 +6,12 @@ var router = express.Router();
 var User = require('../model/user');
 var schedule = require('node-schedule');
 
-var j = schedule.scheduleJob('15 * * * *', function(){
+var j = schedule.scheduleJob('18 * * * *', function(){
   User.find({}, function(err, users) {
     if (users != null) {
-      apiController.getArticles(function(err, articles){
+      getArticles(function(err, articles){
         users.forEach(function(user){
-          apiController.sendGenericMessage(user.fb_id, articles[0])
+          sendGenericMessage(user.fb_id, articles[0])
         });
       })
     }
