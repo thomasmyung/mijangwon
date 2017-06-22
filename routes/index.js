@@ -73,8 +73,10 @@ router.post('/webhook', function (req, res) {
                       unsubscribeUser(senderID)
                       break;
                     default:
-                      sendGenericMessage(senderID, articles[0])
-                      break;
+                      callWitAI(text, function(err, intent){
+                        handleIntent(intent, senderID, articles[0])
+                      })
+                    
                 }
               }
           })   
@@ -92,6 +94,25 @@ router.post('/webhook', function (req, res) {
     res.sendStatus(200);
   }
 });
+function handleIntent(intent, sender, article) {
+  switch(intent){
+    case "greeting":
+      sendTextMessage(sender, "Hi!")
+      break;
+    case "identification":
+      sendTextMessage(sender, "Im a go-rae and you are a cham-chi")
+      break;
+    case "general news":
+      sendGenericMessage(sender, article)
+      break;
+    case "local news":
+      sendTextMessage(sender, "I don't know local news yet")
+      break;
+    default:
+      sendTextMessage(sender,"I am not sure what you are saying..")
+      break;
+  }
+}
 
 function subscribeUser(id){
   var newUser = new User({
@@ -170,7 +191,29 @@ function callSendAPI(messageData) {
     }
   });  
 }
-
+function callWitAI(query, callback) {
+  query = encodeURIComponent(query);
+    request({
+      uri: 'https://api.wit.ai/message?v=20170621&q='+query,
+      qs: {access_token: process.env.wit_token},
+      method: 'GET'
+    }, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log("successfully got %s", response.body);
+        try {
+          body = JSON.parse(response.body)
+          intent = body["entities"]["intent"][0]["value"]
+          callback(null, intent)
+        } catch{e}{
+          callback{e}
+        }
+      } else{
+        console.log(response.statusCode)
+        console.error("Unable to send message, %s", error);
+        callback(error)
+      }
+    });
+}
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
