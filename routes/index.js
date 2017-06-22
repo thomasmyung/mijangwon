@@ -204,8 +204,8 @@ function callWitAI(query, callback) {
           body = JSON.parse(response.body)
           intent = body["entities"]["intent"][0]["value"]
           callback(null, intent)
-        } catch{e}{
-          callback{e}
+        } catch(e){
+          callback(e})
         }
       } else{
         console.log(response.statusCode)
