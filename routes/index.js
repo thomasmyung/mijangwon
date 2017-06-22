@@ -205,7 +205,7 @@ function callWitAI(query, callback) {
           intent = body["entities"]["intent"][0]["value"]
           callback(null, intent)
         } catch(e){
-          callback(e){
+          callback(e)
         }
       } else{
         console.log(response.statusCode)
