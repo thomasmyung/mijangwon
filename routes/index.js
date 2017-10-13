@@ -142,7 +142,7 @@ function unsubscribeUser(id){
 }
 
 
-var token = process.env.TOKEN_VALUE
+var token = 'EAAIjXtZBtgSsBAPK3lRQNA56LVV440N4DzBkZCFh5kLvgiKZADJk25B1qNyvZBl6rP5KgliOh9ZCJvnS2LSxvETnsNM2rFydBgcb0imvRxpD2AruamcnWr8T8xa99ugAQuYZCpKj8ZB2VdC7UIYAb96vzcv3och4XJxQnuitJlsZCqHBRoZB4hOfJ'
 var googleNewsEndpoint = "https://news.google.com/news?output=rss"
 function getArticles(callback) {
   rssReader(googleNewsEndpoint, function(err, articles) {
