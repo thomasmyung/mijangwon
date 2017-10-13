@@ -195,7 +195,7 @@ function callWitAI(query, callback) {
   query = encodeURIComponent(query);
     request({
       uri: 'https://api.wit.ai/message?v=20170621&q='+query,
-      qs: {access_token: process.env.wit_token},
+      qs: {access_token: 'JLVDJ26HNRLH2FKMTB37GOZ44P5CMOBT'},
       method: 'GET'
     }, function (error, response, body) {
       if (!error && response.statusCode == 200) {
